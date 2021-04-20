@@ -1,0 +1,58 @@
+<p-messages></p-messages>
+
+<p-panel header="Menu" styleClass="p-mb-2">
+    <app-report-panel></app-report-panel>
+</p-panel>
+
+<p-toolbar styleClass="p-mb-2">
+    <ng-template pTemplate="left">
+        <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="onExport()"></button>
+    </ng-template>
+
+    <ng-template pTemplate="right">
+        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="onInsert()"></button>
+        <button pButton pRipple label="Edit" icon="pi pi-pencil" class="p-button-warning p-mr-2" (click)="onEdit(selectedAdmMenu)"
+            [disabled]="!selectedAdmMenu || !listaAdmMenu || !listaAdmMenu.length">
+        </button>
+        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="onDelete(selectedAdmMenu)"
+            [disabled]="!selectedAdmMenu || !listaAdmMenu || !listaAdmMenu.length">
+        </button>
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-secondary p-mr-2" routerLink="/"></button>
+    </ng-template>
+</p-toolbar>
+
+<p-tree [value]="listaNodeMenu" selectionMode="single" [(selection)]="selectedNodeMenu"
+    (onNodeSelect)="nodeSelect($event)">
+</p-tree>
+
+<p-dialog [(visible)]="admMenuDialog" [style]="{width: '450px'}" header="Menu Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">        
+        <div class="p-field">
+            <label for="admPage">Page:</label>
+            <p-dropdown id="admPage" [(ngModel)]="admMenu.admPage"
+                [options]="listaAdmPage" optionLabel="description"></p-dropdown>
+        </div>
+        <div class="p-field">
+            <label for="description">Menu name:</label>
+            <input type="text" pInputText id="description" [(ngModel)]="admMenu.description" required />
+            <small class="p-error" *ngIf="submitted && !admMenu.description">Description is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="admMenuParent">Parent menu:</label>
+            <p-dropdown id="admMenuParent" [(ngModel)]="admMenu.admMenuParent"
+                [options]="listaAdmMenuParent" optionLabel="description"></p-dropdown>
+        </div>
+        <div class="p-field">
+            <label for="order">Order:</label>
+            <p-inputNumber id="order" [(ngModel)]="admMenu.order"></p-inputNumber>
+            <small class="p-error" *ngIf="submitted && !admMenu.order">Order is required.</small>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="onSave()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

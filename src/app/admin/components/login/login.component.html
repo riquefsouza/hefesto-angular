@@ -1,0 +1,29 @@
+<p-toast></p-toast>
+
+<div class="centered p-shadow-8" style="width:350px;">
+    <p-panel id="panelBasic" header="Log in">
+        <div class="p-fluid p-formgrid">
+            <div class="p-field p-col-12">
+                <label for="login">Login:</label>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-user"></i>
+                    <input type="text" pInputText id="login" [(ngModel)]="admUser.login" required maxlength="10" 
+						placeholder="Enter your username" />    
+                </span>
+                <small class="p-error" *ngIf="submitted && !admUser.login">Login is required.</small>
+            </div>
+            <div class="p-field p-col-12">
+                <label for="password">Password:</label>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-lock"></i>
+                    <input type="password" pPassword id="password" [(ngModel)]="admUser.password" required maxlength="10" 
+						placeholder="Enter your password" [feedback]="false" />
+                </span>
+                <small class="p-error" *ngIf="submitted && !admUser.password">Password is required.</small>
+            </div>
+        </div>
+        <div class="p-grid p-justify-center">
+            <button pButton pRipple label="Enter" class="p-button-success p-mr-2" (click)="login()"></button>
+        </div>
+    </p-panel>
+</div>

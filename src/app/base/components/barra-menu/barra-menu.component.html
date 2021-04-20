@@ -1,0 +1,21 @@
+<div *ngIf="!logged">
+    <p-menubar styleClass="p-mb-2">
+        <ng-template pTemplate="start">
+            <a routerLink="/">
+                <img src="assets/logo.png" height="40" class="p-mr-2" >
+            </a>
+        </ng-template>
+    </p-menubar>
+</div>
+<div *ngIf="logged">
+    <p-menubar [model]="menuItems" styleClass="p-mb-2">
+        <ng-template pTemplate="start">
+            <a routerLink="/">
+                <img src="assets/logo.png" height="40" class="p-mr-2" >
+            </a>
+        </ng-template>
+        <ng-template pTemplate="end">
+            <button pButton label="Logout" icon="pi pi-power-off"></button>
+        </ng-template>    
+    </p-menubar>
+</div>

@@ -1,0 +1,51 @@
+<p-panel id="panelBasic" header="Profile">
+
+    <div class="p-grid p-justify-end">
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-success p-mr-2" (click)="onSave()"></button>
+        <button pButton pRipple label="Clean" icon="pi pi-star-o" class="p-button-primary p-mr-2" (click)="onClean()"></button>
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-secondary p-mr-2" routerLink="/admProfile"></button>
+    </div> 
+
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col-6">
+            <label for="description">Description:</label>
+            <input type="text" pInputText id="description" [(ngModel)]="admProfile.description" required />
+            <small class="p-error" *ngIf="submitted && !admProfile.description">Description is required.</small>
+        </div>
+        <div class="p-field p-col-1 p-md-1">
+            <label for="general" style="margin: 4px;">All users:</label>
+            <p-checkbox id="general" [(ngModel)]="admProfile.general" binary="true" inputId="general"></p-checkbox>
+        </div>    
+        <div class="p-field p-col-2 p-md-2">
+            <label for="administrator" style="margin: 4px;">System administrators:</label>
+            <p-checkbox id="administrator" [(ngModel)]="admProfile.administrator" binary="true" inputId="administrator"></p-checkbox>    
+        </div>
+    </div>
+    <div class="p-fluid p-formgrid p-grid">    
+        <div class="p-field p-col-12 p-md-8">
+            <label for="profileUsers">User(s):</label>
+            <p-pickList [source]="sourceUsers" [target]="targetUsers" sourceHeader="Available" targetHeader="Selected" [dragdrop]="true"
+                [responsive]="true" [sourceStyle]="{'height':'30rem'}" [targetStyle]="{'height':'30rem'}" filterBy="name"
+                sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name">
+                <ng-template let-user pTemplate="item">
+                    <div class="user-item">
+                        <div>{{user.name}}</div>
+                    </div>
+                </ng-template>
+            </p-pickList>
+        </div>
+        <div class="p-field p-col-12 p-md-8">
+            <label for="profilePages">Page(s):</label>
+            <p-pickList [source]="sourcePages" [target]="targetPages" sourceHeader="Available" targetHeader="Selected" [dragdrop]="true"
+                [responsive]="true" [sourceStyle]="{'height':'30rem'}" [targetStyle]="{'height':'30rem'}" filterBy="description"
+                sourceFilterPlaceholder="Search by description" targetFilterPlaceholder="Search by description">
+                <ng-template let-page pTemplate="item">
+                    <div class="page-item">
+                        <div>{{page.description}}</div>
+                    </div>
+                </ng-template>
+            </p-pickList>
+        </div>
+    </div>
+
+</p-panel>

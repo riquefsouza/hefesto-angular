@@ -1,0 +1,86 @@
+<p-messages></p-messages>
+
+<p-panel header="Configuration Parameter Category" styleClass="p-mb-2">
+    <app-report-panel></app-report-panel>
+</p-panel>
+
+<p-toolbar styleClass="p-mb-2">
+    <ng-template pTemplate="left">
+        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="onInsert()"></button>
+        <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" 
+            (click)="deleteSelected()" 
+            [disabled]="!selectedAdmParameterCategories || !selectedAdmParameterCategories.length">
+        </button>
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-secondary p-mr-2" routerLink="/"></button>
+    </ng-template>
+
+    <ng-template pTemplate="right">
+        <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+    </ng-template>
+</p-toolbar>
+
+<p-table #dt [value]="listaAdmParameterCategory" [rows]="10" [paginator]="true" paginatorPosition="both" [rowsPerPageOptions]="[10,25,50,100,150,200]"
+    [globalFilterFields]="['description']"
+    [(selection)]="selectedAdmParameterCategories" [rowHover]="true" dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">Manage Parameter Categories</h5>
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 3rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="id" style="width: 120px;" >Id <p-sortIcon field="id"></p-sortIcon></th>
+            <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
+            <th pSortableColumn="order">Order <p-sortIcon field="order"></p-sortIcon></th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-admParameterCategory>
+        <tr>
+            <td>
+                <p-tableCheckbox [value]="admParameterCategory"></p-tableCheckbox>
+            </td>
+            <td>{{admParameterCategory.id}}</td>
+            <td>{{admParameterCategory.description}}</td>
+            <td>{{admParameterCategory.order}}</td>
+            <td>
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="onEdit(admParameterCategory)"></button>
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="onDelete(admParameterCategory)"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            In total there are {{listaAdmParameterCategory ? listaAdmParameterCategory.length : 0 }} parameter categories.
+        </div>
+    </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="admParameterCategoryDialog" [style]="{width: '450px'}" header="Parameter Category Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="description">Description</label>
+            <textarea id="description" pInputTextarea [(ngModel)]="admParameterCategory.description" required autofocus rows="3" cols="20"></textarea>
+            <small class="p-error" *ngIf="submitted && !admParameterCategory.description">Description is required.</small>
+        </div>
+        <div class="p-field p-col">
+            <label for="order">Order</label>
+            <p-inputNumber id="order" [(ngModel)]="admParameterCategory.order"></p-inputNumber>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="onSave()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

@@ -1,0 +1,35 @@
+<p-panel id="panelBasic" header="Page">
+
+    <div class="p-grid p-justify-end">
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-success p-mr-2" (click)="onSave()"></button>
+        <button pButton pRipple label="Clean" icon="pi pi-star-o" class="p-button-primary p-mr-2" (click)="onClean()"></button>
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-secondary p-mr-2" routerLink="/admPage"></button>
+    </div> 
+
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col-12 p-md-8">
+            <label for="url">Page:</label>
+            <input type="text" pInputText id="url" [(ngModel)]="admPage.url" required />
+            <small class="p-error" *ngIf="submitted && !admPage.url">Page is required.</small>
+        </div>
+        <div class="p-field p-col-12">
+            <label for="description">Description:</label>
+            <input type="text" pInputText id="description" [(ngModel)]="admPage.description" required />
+            <small class="p-error" *ngIf="submitted && !admPage.description">Description is required.</small>
+        </div>
+        <div class="p-field p-col-12 p-md-8">
+            <label for="pageProfiles">Page profile(s):</label>
+
+            <p-pickList [source]="sourceProfiles" [target]="targetProfiles" sourceHeader="Available" targetHeader="Selected" [dragdrop]="true"
+                [responsive]="true" [sourceStyle]="{'height':'30rem'}" [targetStyle]="{'height':'30rem'}" filterBy="description"
+                sourceFilterPlaceholder="Search by description" targetFilterPlaceholder="Search by description">
+                <ng-template let-profile pTemplate="item">
+                    <div class="profile-item">
+                        <div>{{profile.description}}</div>
+                    </div>
+                </ng-template>
+            </p-pickList>
+        </div>
+    </div>
+
+</p-panel>

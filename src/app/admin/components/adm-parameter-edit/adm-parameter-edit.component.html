@@ -1,0 +1,32 @@
+<p-panel id="panelBasic" header="Configuration Parameter">
+
+    <div class="p-grid p-justify-end">
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-success p-mr-2" (click)="onSave()"></button>
+        <button pButton pRipple label="Clean" icon="pi pi-star-o" class="p-button-primary p-mr-2" (click)="onClean()"></button>
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-secondary p-mr-2" routerLink="/admParameter"></button>
+    </div> 
+
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col-12 p-md-6">
+            <label for="admParameterCategory">Parameter Category:</label>
+            <p-dropdown id="admParameterCategory" [(ngModel)]="admParameter.admParameterCategory"
+                [options]="listaAdmParameterCategory" optionLabel="description"></p-dropdown>
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+            <label for="code">Code:</label>
+            <input type="text" pInputText id="code" [(ngModel)]="admParameter.code" required />
+            <small class="p-error" *ngIf="submitted && !admParameter.code">Code is required.</small>
+        </div>
+        <div class="p-field p-col-12">
+            <label for="value">Value:</label>
+            <textarea id="value" pInputTextarea [(ngModel)]="admParameter.value" required rows="3" cols="20"></textarea>
+            <small class="p-error" *ngIf="submitted && !admParameter.value">Value is required.</small>
+        </div>
+        <div class="p-field p-col-12">
+            <label for="description">Description:</label>
+            <input type="text" pInputText id="description" [(ngModel)]="admParameter.description" required />
+            <small class="p-error" *ngIf="submitted && !admParameter.description">Description is required.</small>
+        </div>
+    </div>
+
+</p-panel>
