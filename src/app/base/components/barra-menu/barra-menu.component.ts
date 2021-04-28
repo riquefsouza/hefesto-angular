@@ -21,30 +21,14 @@ export class BarraMenuComponent implements OnInit {
         {
             label: 'Settings',
             items: [
-                {
-                    label: 'Parameter Category', routerLink: '/admParameterCategory'
-                },
-                {
-                    label: 'Parameter', routerLink: '/admParameter'
-                },
-                {
-                    label: 'Profile', routerLink: '/admProfile'
-                },
-                {
-                    label: 'Page', routerLink: '/admPage'
-                },
-                {
-                    label: 'Menu', routerLink: '/admMenu'
-                },
-                {
-                    label: 'User', routerLink: '/admUser'
-                },
-                {
-                    label: 'Change Password', routerLink: '/changePasswordEdit'
-                },
-                {
-                    label: 'Sair', routerLink: '/'
-                }
+                {label: 'Parameter Category', routerLink: '/admParameterCategory'},
+                {label: 'Parameter', routerLink: '/admParameter'},
+                {label: 'Profile', routerLink: '/admProfile'},
+                {label: 'Page', routerLink: '/admPage'},
+                {label: 'Menu', routerLink: '/admMenu'},
+                {label: 'User', routerLink: '/admUser'},
+                {label: 'Change Password', routerLink: '/changePasswordEdit'},
+                {label: 'Sair', routerLink: '/'}
             ]
         }
     ];

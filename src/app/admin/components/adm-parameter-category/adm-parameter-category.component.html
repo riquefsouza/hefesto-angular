@@ -6,16 +6,16 @@
 
 <p-toolbar styleClass="p-mb-2">
     <ng-template pTemplate="left">
+        <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+    </ng-template>
+
+    <ng-template pTemplate="right">
         <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="onInsert()"></button>
-        <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" 
+        <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger p-mr-2" 
             (click)="deleteSelected()" 
             [disabled]="!selectedAdmParameterCategories || !selectedAdmParameterCategories.length">
         </button>
         <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-secondary p-mr-2" routerLink="/"></button>
-    </ng-template>
-
-    <ng-template pTemplate="right">
-        <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
     </ng-template>
 </p-toolbar>
 
@@ -68,7 +68,7 @@
     <ng-template pTemplate="content">
         <div class="p-field">
             <label for="description">Description</label>
-            <textarea id="description" pInputTextarea [(ngModel)]="admParameterCategory.description" required autofocus rows="3" cols="20"></textarea>
+            <textarea id="description" pInputTextarea [(ngModel)]="admParameterCategory.description" required rows="3" cols="20"></textarea>
             <small class="p-error" *ngIf="submitted && !admParameterCategory.description">Description is required.</small>
         </div>
         <div class="p-field p-col">

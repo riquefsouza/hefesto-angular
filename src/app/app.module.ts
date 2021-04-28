@@ -14,7 +14,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RatingModule } from 'primeng/rating';
 import { ToolbarModule } from 'primeng/toolbar';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 import { DropdownModule } from 'primeng/dropdown';
 import { PanelModule } from 'primeng/panel';
@@ -49,6 +49,7 @@ import { ChangePasswordEditComponent } from './admin/components/change-password-
 import { LoginComponent } from './admin/components/login/login.component';
 import { ExportService } from './base/services/export.service';
 import { BarraMenuComponent } from './base/components/barra-menu/barra-menu.component';
+import { ErrorService } from './base/services/error.service';
 
 @NgModule({
     declarations: [
@@ -96,7 +97,8 @@ import { BarraMenuComponent } from './base/components/barra-menu/barra-menu.comp
         PasswordModule,
         ToastModule
     ],
-    providers: [ConfirmationService, StorageService, ExportService,
+    providers: [ConfirmationService, MessageService,
+        StorageService, ExportService, ErrorService,
         AdmProfileService, AdmPageService],
     bootstrap: [AppComponent]
 })

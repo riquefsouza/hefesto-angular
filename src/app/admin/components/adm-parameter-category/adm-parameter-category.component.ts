@@ -41,10 +41,13 @@ export class AdmParameterCategoryComponent implements OnInit {
         header: 'Confirm',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
+
+
             this.listaAdmParameterCategory = this.listaAdmParameterCategory
               .filter(val => !this.selectedAdmParameterCategories.includes(val));
             this.selectedAdmParameterCategories = null;
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Parameter Categories Deleted', life: 3000 });
+
         }
     });
   }
@@ -60,9 +63,11 @@ export class AdmParameterCategoryComponent implements OnInit {
         header: 'Confirm',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
+          this.admParameterCategoryService.delete(admParameterCategory.id).then(obj => {
             this.listaAdmParameterCategory = this.listaAdmParameterCategory.filter(val => val.id !== admParameterCategory.id);
             this.admParameterCategory = {};
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Parameter Category Deleted', life: 3000 });
+          });
         }
     });
   }
@@ -77,13 +82,19 @@ export class AdmParameterCategoryComponent implements OnInit {
 
     if (this.admParameterCategory.description.trim()) {
         if (this.admParameterCategory.id) {
+          this.admParameterCategoryService.update(this.admParameterCategory).then((obj: AdmParameterCategory) => {
+            this.admParameterCategory = obj;
             this.listaAdmParameterCategory[this.admParameterCategoryService
               .findIndexById(this.listaAdmParameterCategory, this.admParameterCategory.id)] = this.admParameterCategory;
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Parameter Category Updated', life: 3000 });
+          });
         } else {
-            this.admParameterCategory.id = this.listaAdmParameterCategory.length + 1;
+          this.admParameterCategoryService.insert(this.admParameterCategory).then((obj: AdmParameterCategory) => {
+            // this.admParameterCategory.id = this.listaAdmParameterCategory.length + 1;
+            this.admParameterCategory = obj;
             this.listaAdmParameterCategory.push(this.admParameterCategory);
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Parameter Category Created', life: 3000 });
+          });
         }
 
         this.listaAdmParameterCategory = [...this.listaAdmParameterCategory];
