@@ -79,13 +79,20 @@ export class AdmProfileEditComponent implements OnInit {
 
     if (this.admProfile.description.trim()) {
         if (this.admProfile.id) {
+          this.admProfileService.update(this.admProfile).then((obj: AdmProfile) => {
+            this.admProfile = obj;
+
             this.listaAdmProfile[
               this.admProfileService.findIndexById(this.listaAdmProfile, this.admProfile.id)] = this.admProfile;
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Profile Updated', life: 3000 });
+          });
         } else {
-            this.admProfile.id = this.listaAdmProfile.length + 1;
+          this.admProfileService.insert(this.admProfile).then((obj: AdmProfile) => {
+            this.admProfile = obj;
+
             this.listaAdmProfile.push(this.admProfile);
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Profile Created', life: 3000 });
+          });
         }
 
         this.listaAdmProfile = [...this.listaAdmProfile];

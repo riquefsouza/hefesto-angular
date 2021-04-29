@@ -1,15 +1,21 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { tap, catchError } from 'rxjs/operators';
+import { ErrorService } from 'src/app/base/services/error.service';
+import { environment } from 'src/environments/environment';
 
 import { AdmPage } from '../models/AdmPage';
-import { AdmProfile } from '../models/AdmProfile';
 import { AdmProfileService } from './AdmProfileService';
 
 @Injectable()
 export class AdmPageService {
 
-    constructor(private http: HttpClient,
-        private admProfileService: AdmProfileService) { }
+    private PATH: string;
+
+    constructor(private http: HttpClient, private errorService: ErrorService,
+        private admProfileService: AdmProfileService) {
+        this.PATH = environment.apiURL + '/admPage';
+    }
 
     public findIndexById(listaAdmPage: AdmPage[], id: number): number {
         let index = -1;
@@ -22,6 +28,7 @@ export class AdmPageService {
         return index;
     }
 
+    /*
     public async findAll(): Promise<AdmPage[]> {
         const res = await this.http.get<any>('assets/data/admPage.json')
             .toPromise();
@@ -71,6 +78,66 @@ export class AdmPageService {
             });
 
         });
+
+        return res;
+    }
+    */
+
+    public async findAllPaginated(page: number) {
+        const params = new HttpParams()
+            .append('page', page.toString());
+        const url = `${this.PATH}/paged`;
+        const res = await this.http.get<AdmPage[]>(url, { params })
+            .toPromise();
+        return res;
+    }
+
+    public async findAll(): Promise<AdmPage[]> {
+        const url = this.PATH;
+        const res = await this.http.get<AdmPage[]>(url)
+            .toPromise();
+        return res;
+    }
+
+    public async findById(id: number): Promise<AdmPage> {
+        const url = `${this.PATH}/${id}`;
+        const res = await this.http.get<AdmPage>(url)
+            .toPromise();
+        return res;
+    }
+
+    public async insert(obj: AdmPage): Promise<AdmPage> {
+        const url = this.PATH;
+        const res = await this.http.post<AdmPage>(url, obj, this.errorService.httpOptions)
+            .pipe(
+                tap((newObj: AdmPage) => this.errorService.log(`insert AdmPage id=${newObj.id}`)),
+                catchError(this.errorService.handleError<AdmPage>('insert AdmPage'))
+            )
+            .toPromise();
+
+        return res;
+    }
+
+    public async update(obj: AdmPage): Promise<AdmPage> {
+        const url = `${this.PATH}/${obj.id}`;
+        const res = await this.http.put<AdmPage>(url, obj, this.errorService.httpOptions)
+            .pipe(
+                tap(_ => this.errorService.log(`update AdmPage id=${obj.id}`)),
+                catchError(this.errorService.handleError<AdmPage>('update AdmPage'))
+            )
+            .toPromise();
+
+        return res;
+    }
+
+    public async delete(id: number): Promise<any> {
+        const url = `${this.PATH}/${id}`;
+        const res = await this.http.delete(url)
+            .pipe(
+                tap(_ => this.errorService.log(`delete AdmPage id=${id}`)),
+                catchError(this.errorService.handleError<any>('delete AdmPage'))
+            )
+            .toPromise();
 
         return res;
     }

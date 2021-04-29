@@ -13,8 +13,10 @@ import { AdmUserEditComponent } from './admin/components/adm-user-edit/adm-user-
 import { AdmUserComponent } from './admin/components/adm-user/adm-user.component';
 import { ChangePasswordEditComponent } from './admin/components/change-password-edit/change-password-edit.component';
 import { LoginComponent } from './admin/components/login/login.component';
+import { NotFoundComponent } from './base/components/not-found/not-found.component';
 
 const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'admParameterCategory', component: AdmParameterCategoryComponent },
   { path: 'admParameterCategoryEdit', component: AdmParameterCategoryEditComponent },
   { path: 'admParameter', component: AdmParameterComponent },
@@ -27,7 +29,8 @@ const routes: Routes = [
   { path: 'admUserEdit', component: AdmUserEditComponent },
   { path: 'admMenu', component: AdmMenuComponent },
   { path: 'changePasswordEdit', component: ChangePasswordEditComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({

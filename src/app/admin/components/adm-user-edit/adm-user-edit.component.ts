@@ -65,13 +65,20 @@ export class AdmUserEditComponent implements OnInit {
 
     if (this.admUser.name.trim()) {
         if (this.admUser.id) {
+          this.admUserService.update(this.admUser).then((obj: AdmUser) => {
+            this.admUser = obj;
+
             this.listaAdmUser[
               this.admUserService.findIndexById(this.listaAdmUser, this.admUser.id)] = this.admUser;
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'User Updated', life: 3000 });
+          });
         } else {
-            this.admUser.id = this.listaAdmUser.length + 1;
+          this.admUserService.insert(this.admUser).then((obj: AdmUser) => {
+            this.admUser = obj;
+
             this.listaAdmUser.push(this.admUser);
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'User Created', life: 3000 });
+          });
         }
 
         this.listaAdmUser = [...this.listaAdmUser];

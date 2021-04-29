@@ -52,13 +52,20 @@ export class AdmParameterEditComponent implements OnInit {
 
     if (this.admParameter.description.trim()) {
         if (this.admParameter.id) {
+          this.admParameterService.update(this.admParameter).then((obj: AdmParameter) => {
+            this.admParameter = obj;
+
             this.listaAdmParameter[
               this.admParameterService.findIndexById(this.listaAdmParameter, this.admParameter.id)] = this.admParameter;
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Parameter Updated', life: 3000 });
+          });
         } else {
-            this.admParameter.id = this.listaAdmParameter.length + 1;
+          this.admParameterService.insert(this.admParameter).then((obj: AdmParameter) => {
+            this.admParameter = obj;
+
             this.listaAdmParameter.push(this.admParameter);
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Parameter Created', life: 3000 });
+          });
         }
 
         this.listaAdmParameter = [...this.listaAdmParameter];

@@ -35,7 +35,7 @@ export class AdmProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.admProfileService
-      .findAllWithUsers()
+      .findAll()
       .then(data => this.listaAdmProfile = data);
 
     this.cols = [
@@ -74,9 +74,11 @@ export class AdmProfileComponent implements OnInit {
         header: 'Confirm',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
+          this.admProfileService.delete(admProfile.id).then(obj => {
             this.listaAdmProfile = this.listaAdmProfile.filter(val => val.id !== admProfile.id);
             this.admProfile = {};
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Profile Deleted', life: 3000 });
+          });
         }
     });
   }

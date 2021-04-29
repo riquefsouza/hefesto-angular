@@ -49,7 +49,7 @@ export class AdmMenuComponent implements OnInit {
     .then(data => this.listaAdmPage = data);
 
     this.admMenuService
-      .findAllWithPages()
+      .findAll()
       .then(data => {
         this.listaAdmMenu = data;
 
@@ -75,7 +75,7 @@ export class AdmMenuComponent implements OnInit {
       };
 
     this.listaAdmMenu.forEach((itemMenu: AdmMenu) => {
-      let m: TreeNode = {};
+      const m: TreeNode = {};
       m.label = itemMenu.description;
       m.data = itemMenu.id;
 
@@ -145,9 +145,11 @@ export class AdmMenuComponent implements OnInit {
         header: 'Confirm',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
+          this.admMenuService.delete(admMenu.id).then(obj => {
             this.listaAdmMenu = this.listaAdmMenu.filter(val => val.id !== admMenu.id);
             this.admMenu = {};
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Menu Deleted', life: 3000 });
+          });
         }
     });
   }

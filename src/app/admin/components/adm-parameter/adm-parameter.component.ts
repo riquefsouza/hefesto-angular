@@ -86,9 +86,11 @@ export class AdmParameterComponent implements OnInit {
         header: 'Confirm',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
+          this.admParameterService.delete(admParameter.id).then(obj => {
             this.listaAdmParameter = this.listaAdmParameter.filter(val => val.id !== admParameter.id);
             this.admParameter = {};
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Parameter Deleted', life: 3000 });
+          });
         }
     });
   }

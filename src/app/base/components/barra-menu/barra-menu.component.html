@@ -15,7 +15,19 @@
             </a>
         </ng-template>
         <ng-template pTemplate="end">
-            <button pButton label="Logout" icon="pi pi-power-off"></button>
-        </ng-template>    
+
+            <div *ngIf="(user$ | async) as user; else login">
+                <i class="fa fa-user-circle mr-1"></i>
+                <a class="mr-1">{{user.name}}</a>
+                <button pButton label="Logout" icon="pi pi-power-off" (click)="logout()"></button>    
+            </div>
+        </ng-template>
+
+        <ng-template #login>
+            <span class="navbar-text">
+                <a [routerLink]="['']">Please, login!</a>
+            </span>
+        </ng-template> 
+        
     </p-menubar>
 </div>

@@ -1,12 +1,19 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { tap, catchError } from 'rxjs/operators';
+import { ErrorService } from 'src/app/base/services/error.service';
+import { environment } from 'src/environments/environment';
 
 import { AdmParameter } from '../models/AdmParameter';
 
 @Injectable()
 export class AdmParameterService {
 
-    constructor(private http: HttpClient) { }
+    private PATH: string;
+
+    constructor(private http: HttpClient, private errorService: ErrorService) {
+        this.PATH = environment.apiURL + '/admParameter';
+    }
 
     public findIndexById(listaAdmParameter: AdmParameter[], id: number): number {
         let index = -1;
@@ -19,6 +26,7 @@ export class AdmParameterService {
         return index;
     }
 
+    /*
     public async findAll(): Promise<AdmParameter[]> {
         const res = await this.http.get<any>('assets/data/admParameter.json')
             .toPromise();
@@ -42,4 +50,66 @@ export class AdmParameterService {
 
         return res;
     }
+    */
+
+
+    public async findAllPaginated(page: number) {
+        const params = new HttpParams()
+            .append('page', page.toString());
+        const url = `${this.PATH}/paged`;
+        const res = await this.http.get<AdmParameter[]>(url, { params })
+            .toPromise();
+        return res;
+    }
+
+    public async findAll(): Promise<AdmParameter[]> {
+        const url = this.PATH;
+        const res = await this.http.get<AdmParameter[]>(url)
+            .toPromise();
+        return res;
+    }
+
+    public async findById(id: number): Promise<AdmParameter> {
+        const url = `${this.PATH}/${id}`;
+        const res = await this.http.get<AdmParameter>(url)
+            .toPromise();
+        return res;
+    }
+
+    public async insert(obj: AdmParameter): Promise<AdmParameter> {
+        const url = this.PATH;
+        const res = await this.http.post<AdmParameter>(url, obj, this.errorService.httpOptions)
+            .pipe(
+                tap((newObj: AdmParameter) => this.errorService.log(`insert AdmParameter id=${newObj.id}`)),
+                catchError(this.errorService.handleError<AdmParameter>('insert AdmParameter'))
+            )
+            .toPromise();
+
+        return res;
+    }
+
+    public async update(obj: AdmParameter): Promise<AdmParameter> {
+        const url = `${this.PATH}/${obj.id}`;
+        const res = await this.http.put<AdmParameter>(url, obj, this.errorService.httpOptions)
+            .pipe(
+                tap(_ => this.errorService.log(`update AdmParameter id=${obj.id}`)),
+                catchError(this.errorService.handleError<AdmParameter>('update AdmParameter'))
+            )
+            .toPromise();
+
+        return res;
+    }
+
+    public async delete(id: number): Promise<any> {
+        const url = `${this.PATH}/${id}`;
+        const res = await this.http.delete(url)
+            .pipe(
+                tap(_ => this.errorService.log(`delete AdmParameter id=${id}`)),
+                catchError(this.errorService.handleError<any>('delete AdmParameter'))
+            )
+            .toPromise();
+
+        return res;
+    }
+
 }

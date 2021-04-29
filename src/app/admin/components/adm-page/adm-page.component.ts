@@ -35,7 +35,7 @@ export class AdmPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.admPageService
-      .findAllWithProfiles()
+      .findAll()
       .then(data => this.listaAdmPage = data);
 
     this.cols = [
@@ -75,9 +75,11 @@ export class AdmPageComponent implements OnInit {
         header: 'Confirm',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
+          this.admPageService.delete(admPage.id).then(obj => {
             this.listaAdmPage = this.listaAdmPage.filter(val => val.id !== admPage.id);
             this.admPage = {};
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Page Deleted', life: 3000 });
+          });
         }
     });
   }

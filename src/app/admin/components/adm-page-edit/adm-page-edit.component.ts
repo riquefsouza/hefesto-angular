@@ -65,13 +65,20 @@ export class AdmPageEditComponent implements OnInit {
 
     if (this.admPage.description.trim()) {
         if (this.admPage.id) {
+          this.admPageService.update(this.admPage).then((obj: AdmPage) => {
+            this.admPage = obj;
+
             this.listaAdmPage[
               this.admPageService.findIndexById(this.listaAdmPage, this.admPage.id)] = this.admPage;
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Page Updated', life: 3000 });
+          });
         } else {
-            this.admPage.id = this.listaAdmPage.length + 1;
+          this.admPageService.insert(this.admPage).then((obj: AdmPage) => {
+            this.admPage = obj;
+
             this.listaAdmPage.push(this.admPage);
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Page Created', life: 3000 });
+          });
         }
 
         this.listaAdmPage = [...this.listaAdmPage];
