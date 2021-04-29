@@ -13,7 +13,7 @@ export class AdmParameterCategoryService {
     private PATH: string;
 
     constructor(private http: HttpClient, private errorService: ErrorService) {
-        this.PATH = '/admParameterCategory';
+        this.PATH = environment.apiURL + '/admParameterCategory';
     }
 
     public findIndexById(listaAdmParameterCategory: AdmParameterCategory[], id: number): number {
@@ -55,28 +55,28 @@ export class AdmParameterCategoryService {
     public async findAllPaginated(page: number) {
         const params = new HttpParams()
             .append('page', page.toString());
-        const url = `${environment.apiURL}${this.PATH}/paged`;
+        const url = `${this.PATH}/paged`;
         const res = await this.http.get<AdmParameterCategory[]>(url, { params })
             .toPromise();
         return res;
     }
 
     public async findAll(): Promise<AdmParameterCategory[]> {
-        const url = `${environment.apiURL}${this.PATH}`;
+        const url = this.PATH;
         const res = await this.http.get<AdmParameterCategory[]>(url)
             .toPromise();
         return res;
     }
 
     public async findById(id: number): Promise<AdmParameterCategory> {
-        const url = `${environment.apiURL}${this.PATH}/${id}`;
+        const url = `${this.PATH}/${id}`;
         const res = await this.http.get<AdmParameterCategory>(url)
             .toPromise();
         return res;
     }
 
     public async insert(obj: AdmParameterCategory): Promise<AdmParameterCategory> {
-        const url = `${environment.apiURL}${this.PATH}`;
+        const url = this.PATH;
         const res = await this.http.post<AdmParameterCategory>(url, obj, this.errorService.httpOptions)
         .pipe(
             tap((newObj: AdmParameterCategory) => this.errorService.log(`insert AdmParameterCategory id=${newObj.id}`)),
@@ -88,7 +88,7 @@ export class AdmParameterCategoryService {
     }
 
     public async update(obj: AdmParameterCategory): Promise<AdmParameterCategory> {
-        const url = `${environment.apiURL}${this.PATH}/${obj.id}`;
+        const url = `${this.PATH}/${obj.id}`;
         const res = await this.http.put<AdmParameterCategory>(url, obj, this.errorService.httpOptions)
         .pipe(
             tap(_ => this.errorService.log(`update AdmParameterCategory id=${obj.id}`)),
@@ -100,7 +100,7 @@ export class AdmParameterCategoryService {
     }
 
     public async delete(id: number): Promise<any> {
-        const url = `${environment.apiURL}${this.PATH}/${id}`;
+        const url = `${this.PATH}/${id}`;
         const res = await this.http.delete(url)
         .pipe(
             tap(_ => this.errorService.log(`delete AdmParameterCategory id=${id}`)),

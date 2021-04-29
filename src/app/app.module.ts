@@ -50,6 +50,7 @@ import { LoginComponent } from './admin/components/login/login.component';
 import { ExportService } from './base/services/export.service';
 import { BarraMenuComponent } from './base/components/barra-menu/barra-menu.component';
 import { ErrorService } from './base/services/error.service';
+import { httpInterceptorProviders } from './base/interceptors';
 
 @NgModule({
     declarations: [
@@ -97,7 +98,8 @@ import { ErrorService } from './base/services/error.service';
         PasswordModule,
         ToastModule
     ],
-    providers: [ConfirmationService, MessageService,
+    providers: [httpInterceptorProviders,
+        ConfirmationService, MessageService,
         StorageService, ExportService, ErrorService,
         AdmProfileService, AdmPageService],
     bootstrap: [AppComponent]

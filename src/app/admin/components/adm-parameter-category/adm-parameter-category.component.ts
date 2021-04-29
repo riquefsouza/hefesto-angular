@@ -90,7 +90,6 @@ export class AdmParameterCategoryComponent implements OnInit {
           });
         } else {
           this.admParameterCategoryService.insert(this.admParameterCategory).then((obj: AdmParameterCategory) => {
-            // this.admParameterCategory.id = this.listaAdmParameterCategory.length + 1;
             this.admParameterCategory = obj;
             this.listaAdmParameterCategory.push(this.admParameterCategory);
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Parameter Category Created', life: 3000 });
