@@ -1,3 +1,4 @@
+import { BarraMenuComponent } from './base/components/barra-menu/barra-menu.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdmMenuComponent } from './admin/components/adm-menu/adm-menu.component';
@@ -13,10 +14,12 @@ import { AdmUserEditComponent } from './admin/components/adm-user-edit/adm-user-
 import { AdmUserComponent } from './admin/components/adm-user/adm-user.component';
 import { ChangePasswordEditComponent } from './admin/components/change-password-edit/change-password-edit.component';
 import { LoginComponent } from './admin/components/login/login.component';
+import { AuthGuard } from './base/auth/auth.guard';
 import { NotFoundComponent } from './base/components/not-found/not-found.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'login' },
+  // { path: '', pathMatch: 'full', redirectTo: 'login' },
+  // { path: '', canActivate: [AuthGuard], component: BarraMenuComponent },
   { path: 'admParameterCategory', component: AdmParameterCategoryComponent },
   { path: 'admParameterCategoryEdit', component: AdmParameterCategoryEditComponent },
   { path: 'admParameter', component: AdmParameterComponent },
@@ -35,7 +38,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, { useHash: true })
   ],
   exports: [
     RouterModule

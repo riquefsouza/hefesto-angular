@@ -17,7 +17,7 @@ export class AuthService {
 
         return this.http
             .post(
-                environment.apiURL + '/user/login',
+                environment.apiURL + '/auth',
                 { userName, password },
                 { observe: 'response' }
             )
