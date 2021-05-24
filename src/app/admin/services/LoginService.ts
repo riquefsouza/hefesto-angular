@@ -21,24 +21,28 @@ export class LoginService {
         this.PATH = environment.url;
     }
 
-    public login(admUser: AdmUser): boolean {
-        const loginForm: LoginForm = emptyLoginForm;
+    public login(admUser: AdmUser): Promise<boolean> {
+        const res = new Promise<boolean>((resolve, reject) => {
+            const loginForm: LoginForm = emptyLoginForm;
 
-        if (admUser.login !== '' && admUser.password !== '') {
-            loginForm.login = admUser.login;
-            loginForm.password = admUser.password;
+            if (admUser.login !== '' && admUser.password !== '') {
+                loginForm.login = admUser.login;
+                loginForm.password = admUser.password;
 
-            this.auth(loginForm).then((obj: TokenDTO) => {
-                this.userService.setToken(obj.token);
-                console.log(`User ${admUser.login} authenticated with token ${obj.token}`);
+                this.auth(loginForm).then((obj: TokenDTO) => {
+                    this.userService.setToken(obj.token);
+                    console.log(`User ${admUser.login} authenticated with token ${obj.token}`);
+                    resolve(true);
+                })
+                .catch(erro => {
+                    reject(false);
+                });
+            } else {
+                reject(false);
+            }
+        });
 
-                // this.router.navigate(['user', admUser.name]);
-                this.router.navigate(['']);
-
-                return true;
-            });
-        }
-        return false;
+        return res;
     }
 
     public async auth(obj: LoginForm): Promise<TokenDTO> {

@@ -1,4 +1,4 @@
-<div *ngIf="!logged">
+<ng-template #barralogo>
     <p-menubar styleClass="p-mb-2">
         <ng-template pTemplate="start">
             <a routerLink="/">
@@ -6,8 +6,8 @@
             </a>
         </ng-template>
     </p-menubar>
-</div>
-<div *ngIf="logged">
+</ng-template>
+<div *ngIf="(user$ | async); else barralogo">
     <p-menubar [model]="menuItems" styleClass="p-mb-2">
         <ng-template pTemplate="start">
             <a routerLink="/">

@@ -32,11 +32,16 @@ export class LoginComponent implements OnInit {
   login() {
     this.submitted = true;
 
-    if (this.loginService.login(this.admUser)) {
-      this.router.navigate(['/home']);
-    } else {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'login now allowed!', life: 3000 });
-    }
+    this.loginService.login(this.admUser).then((islogged: boolean) => {
+      if (islogged) {
+        this.router.navigate(['home']);
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'login not allowed!', life: 3000 });
+      }
+    })
+    .catch(erro => {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'login not allowed!', life: 3000 });
+    });
 
   }
 }

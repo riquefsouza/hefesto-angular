@@ -11,9 +11,7 @@ export class UserService {
     private userName: string;
 
     constructor(private tokenService: TokenService) {
-
-        this.tokenService.hasToken() &&
-            this.decodeAndNotify();
+        this.tokenService.hasToken() && this.decodeAndNotify();
     }
 
     setToken(token: string) {

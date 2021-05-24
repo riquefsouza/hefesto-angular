@@ -12,8 +12,6 @@ import { UserService } from '../../user/user.service';
 })
 export class BarraMenuComponent implements OnInit {
 
-  logged: boolean;
-
   menuItems: MenuItem[];
 
   user$: Observable<User>;
@@ -26,7 +24,6 @@ export class BarraMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.logged = true;
 
     this.menuItems = [
       {
@@ -39,7 +36,7 @@ export class BarraMenuComponent implements OnInit {
           { label: 'Menu', routerLink: '/admMenu' },
           { label: 'User', routerLink: '/admUser' },
           { label: 'Change Password', routerLink: '/changePasswordEdit' },
-          { label: 'Sair', routerLink: '/' }
+          { label: 'Sair', command: () => { this.logout(); } }
         ]
       }
     ];

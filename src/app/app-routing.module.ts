@@ -18,27 +18,27 @@ import { AuthGuard } from './base/auth/auth.guard';
 import { NotFoundComponent } from './base/components/not-found/not-found.component';
 
 const routes: Routes = [
-  // { path: '', pathMatch: 'full', redirectTo: 'login' },
-  // { path: '', canActivate: [AuthGuard], component: BarraMenuComponent },
-  { path: 'admParameterCategory', component: AdmParameterCategoryComponent },
-  { path: 'admParameterCategoryEdit', component: AdmParameterCategoryEditComponent },
-  { path: 'admParameter', component: AdmParameterComponent },
-  { path: 'admParameterEdit', component: AdmParameterEditComponent },
-  { path: 'admPage', component: AdmPageComponent },
-  { path: 'admPageEdit', component: AdmPageEditComponent },
-  { path: 'admProfile', component: AdmProfileComponent },
-  { path: 'admProfileEdit', component: AdmProfileEditComponent },
-  { path: 'admUser', component: AdmUserComponent },
-  { path: 'admUserEdit', component: AdmUserEditComponent },
-  { path: 'admMenu', component: AdmMenuComponent },
-  { path: 'changePasswordEdit', component: ChangePasswordEditComponent },
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
+  { path: 'home', canActivate: [AuthGuard], component: BarraMenuComponent },
+  { path: 'admParameterCategory', canActivate: [AuthGuard], component: AdmParameterCategoryComponent },
+  { path: 'admParameterCategoryEdit', canActivate: [AuthGuard], component: AdmParameterCategoryEditComponent },
+  { path: 'admParameter', canActivate: [AuthGuard], component: AdmParameterComponent },
+  { path: 'admParameterEdit', canActivate: [AuthGuard], component: AdmParameterEditComponent },
+  { path: 'admPage', canActivate: [AuthGuard], component: AdmPageComponent },
+  { path: 'admPageEdit', canActivate: [AuthGuard], component: AdmPageEditComponent },
+  { path: 'admProfile', canActivate: [AuthGuard], component: AdmProfileComponent },
+  { path: 'admProfileEdit', canActivate: [AuthGuard], component: AdmProfileEditComponent },
+  { path: 'admUser', canActivate: [AuthGuard], component: AdmUserComponent },
+  { path: 'admUserEdit', canActivate: [AuthGuard], component: AdmUserEditComponent },
+  { path: 'admMenu', canActivate: [AuthGuard], component: AdmMenuComponent },
+  { path: 'changePasswordEdit', canActivate: [AuthGuard], component: ChangePasswordEditComponent },
   { path: 'login', component: LoginComponent },
   { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { useHash: true })
+    RouterModule.forRoot(routes, { useHash: false })
   ],
   exports: [
     RouterModule
