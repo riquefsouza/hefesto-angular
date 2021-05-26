@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AdmParameterCategory } from '../../models/AdmParameterCategory';
 import { AdmParameterCategoryService } from '../../services/AdmParameterCategoryService';
+import { ReportParamForm } from 'src/app/base/models/ReportParamsForm';
+import { ItypeReport } from 'src/app/base/services/ReportService';
 
 @Component({
   selector: 'app-adm-parameter-category',
@@ -21,12 +23,34 @@ export class AdmParameterCategoryComponent implements OnInit {
 
   submitted: boolean;
 
+  reportParamForm: ReportParamForm;
+
   constructor(private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private admParameterCategoryService: AdmParameterCategoryService) {}
+    private admParameterCategoryService: AdmParameterCategoryService) {
+      this.reportParamForm = {
+        reportType: 'PDF',
+        forceDownload: true
+      };
+    }
 
   ngOnInit(): void {
     this.admParameterCategoryService.findAll().then(data => this.listaAdmParameterCategory = data);
+  }
+
+  onChangedTypeReport(typeReport: ItypeReport) {
+    this.reportParamForm.reportType = typeReport.type;
+  }
+
+  onChangedForceDownload(forceDownload: boolean) {
+    this.reportParamForm.forceDownload = forceDownload;
+  }
+
+  onExport() {
+    this.admParameterCategoryService.report(this.reportParamForm).then(() => {
+      this.messageService.add({severity: 'info', summary: 'Parameter Category Exported', 
+        detail: 'Parameter Category Exported', life: 1000});
+    });
   }
 
   onInsert() {

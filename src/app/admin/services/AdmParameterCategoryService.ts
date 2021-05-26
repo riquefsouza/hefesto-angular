@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AdmParameterCategory } from '../models/AdmParameterCategory';
 import { catchError, tap } from 'rxjs/operators';
+import { ReportParamForm } from 'src/app/base/models/ReportParamsForm';
+import * as FileSaver from 'file-saver';
 
 @Injectable()
 export class AdmParameterCategoryService {
@@ -108,4 +110,23 @@ export class AdmParameterCategoryService {
 
         return res;
     }
+
+    public async report(obj: ReportParamForm): Promise<any> {
+        const url = `${this.PATH}/report`;
+        const res = await this.http.post(url, obj, {
+            headers: this.errorService.httpOptions.headers,
+            responseType: 'blob'
+        })
+        .pipe(
+            tap(
+              data => FileSaver.saveAs(data, 'AdmParameterCategory.' + obj.reportType.toLowerCase()),
+              error => this.errorService.log(`report AdmParameterCategory: ${error}`)
+            ),
+            catchError(this.errorService.handleError<any>('report AdmParameterCategory'))
+          )
+        .toPromise();
+
+        return res;
+    }
+
 }

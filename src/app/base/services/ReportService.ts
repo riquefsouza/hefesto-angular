@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { SelectItemGroup } from 'primeng/api';
 
 export interface ItypeReport {
@@ -112,4 +111,5 @@ export class ReportService {
   public getTypeReport(): SelectItemGroup[] {
     return this.typeReport;
   }
+
 }

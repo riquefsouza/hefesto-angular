@@ -1,6 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import * as FileSaver from 'file-saver';
 import { tap, catchError } from 'rxjs/operators';
+import { ReportParamForm } from 'src/app/base/models/ReportParamsForm';
 import { ErrorService } from 'src/app/base/services/error.service';
 import { environment } from 'src/environments/environment';
 
@@ -127,6 +129,24 @@ export class AdmMenuService {
                 catchError(this.errorService.handleError<any>('delete AdmMenu'))
             )
             .toPromise();
+
+        return res;
+    }
+
+    public async report(obj: ReportParamForm): Promise<any> {
+        const url = `${this.PATH}/report`;
+        const res = await this.http.post(url, obj, {
+            headers: this.errorService.httpOptions.headers,
+            responseType: 'blob'
+        })
+        .pipe(
+            tap(
+              data => FileSaver.saveAs(data, 'AdmMenu.' + obj.reportType.toLowerCase()),
+              error => this.errorService.log(`report AdmMenu: ${error}`)
+            ),
+            catchError(this.errorService.handleError<any>('report AdmMenu'))
+          )
+        .toPromise();
 
         return res;
     }

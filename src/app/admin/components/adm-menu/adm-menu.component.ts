@@ -5,6 +5,8 @@ import { AdmMenu } from '../../models/AdmMenu';
 import { AdmMenuService } from '../../services/AdmMenuService';
 import { TreeNode } from 'primeng/api';
 import { AdmPageService } from '../../services/AdmPageService';
+import { ReportParamForm } from 'src/app/base/models/ReportParamsForm';
+import { ItypeReport } from 'src/app/base/services/ReportService';
 
 @Component({
   selector: 'app-adm-menu',
@@ -38,10 +40,17 @@ export class AdmMenuComponent implements OnInit {
 
   listaAdmMenuParent: AdmMenu[];
 
+  reportParamForm: ReportParamForm;
+
   constructor(private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private admMenuService: AdmMenuService,
-    private admPageService: AdmPageService) { }
+    private admPageService: AdmPageService) { 
+      this.reportParamForm = {
+        reportType: 'PDF',
+        forceDownload: true
+      };
+    }
 
   ngOnInit(): void {
     this.admPageService
@@ -124,8 +133,18 @@ export class AdmMenuComponent implements OnInit {
       // detail: this.selectedAdmMenu.description});
   }
 
+  onChangedTypeReport(typeReport: ItypeReport) {
+    this.reportParamForm.reportType = typeReport.type;
+  }
+
+  onChangedForceDownload(forceDownload: boolean) {
+    this.reportParamForm.forceDownload = forceDownload;
+  }
+
   onExport() {
-    this.messageService.add({severity: 'info', summary: 'Menu Exported', detail: 'Menus Exported', life: 1000});
+    this.admMenuService.report(this.reportParamForm).then(() => {
+      this.messageService.add({severity: 'info', summary: 'Menu Exported', detail: 'Menu Exported', life: 1000});
+    });
   }
 
   onInsert() {

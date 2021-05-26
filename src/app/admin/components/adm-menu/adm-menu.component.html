@@ -2,7 +2,7 @@
 <p-messages></p-messages>
 
 <p-panel header="Menu" styleClass="p-mb-2">
-    <app-report-panel></app-report-panel>
+    <app-report-panel (typeReportChange)="onChangedTypeReport($event)" (forceDownloadChange)="onChangedForceDownload($event)"></app-report-panel>
 </p-panel>
 
 <p-toolbar styleClass="p-mb-2">

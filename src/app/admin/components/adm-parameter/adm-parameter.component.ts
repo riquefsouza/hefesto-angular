@@ -7,6 +7,8 @@ import { AdmParameterService } from '../../services/AdmParameterService';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/base/services/StorageService';
 import { ExportService } from 'src/app/base/services/export.service';
+import { ReportParamForm } from 'src/app/base/models/ReportParamsForm';
+import { ItypeReport } from 'src/app/base/services/ReportService';
 
 @Component({
   selector: 'app-adm-parameter',
@@ -31,13 +33,20 @@ export class AdmParameterComponent implements OnInit {
 
   exportColumns: any[];
 
+  reportParamForm: ReportParamForm;
+
   constructor(private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private admParameterService: AdmParameterService,
     private admParameterCategoryService: AdmParameterCategoryService,
     private router: Router,
     private storageService: StorageService,
-    private exportService: ExportService) {}
+    private exportService: ExportService) {
+      this.reportParamForm = {
+        reportType: 'PDF',
+        forceDownload: true
+      };
+    }
 
   ngOnInit(): void {
     this.admParameterCategoryService
@@ -59,8 +68,18 @@ export class AdmParameterComponent implements OnInit {
     this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
   }
 
+  onChangedTypeReport(typeReport: ItypeReport) {
+    this.reportParamForm.reportType = typeReport.type;
+  }
+
+  onChangedForceDownload(forceDownload: boolean) {
+    this.reportParamForm.forceDownload = forceDownload;
+  }
+
   onExport() {
-    this.messageService.add({severity: 'info', summary: 'Parameter Exported', detail: 'Parameters Exported', life: 1000});
+    this.admParameterService.report(this.reportParamForm).then(() => {
+      this.messageService.add({severity: 'info', summary: 'Parameter Exported', detail: 'Parameter Exported', life: 1000});
+    });
   }
 
   onInsert() {

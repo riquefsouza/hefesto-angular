@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { SelectItemGroup } from 'primeng/api';
+import { Subject } from 'rxjs';
 import { ItypeReport, PDFReport, ReportService } from '../../services/ReportService';
 
 @Component({
@@ -14,16 +15,28 @@ export class ReportPanelComponent implements OnInit {
 
   selectedTypeReport: ItypeReport;
 
-  forceDownload: boolean;
+  selectedForceDownload: boolean;
 
-  constructor(private reportService: ReportService) { 
+  @Output() typeReportChange = new EventEmitter<ItypeReport>();
+  typeReportChangedSource = new Subject<ItypeReport>();
+
+  @Output() forceDownloadChange = new EventEmitter<boolean>();
+  forceDownloadChangedSource = new Subject<boolean>();
+
+  constructor(private reportService: ReportService) {
     this.typeReport = this.reportService.getTypeReport();
     this.selectedTypeReport = PDFReport;
-    this.forceDownload = false;
+    this.selectedForceDownload = false;
   }
 
   ngOnInit(): void {
+    this.typeReportChangedSource.subscribe(item => this.typeReportChange.emit(item));
+    this.forceDownloadChangedSource.subscribe(item => this.forceDownloadChange.emit(item));
+  }
 
+  ngOnDestroy() {
+    this.typeReportChangedSource.unsubscribe();
+    this.forceDownloadChangedSource.unsubscribe();
   }
 
 }

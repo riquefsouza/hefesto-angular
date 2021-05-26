@@ -2,12 +2,12 @@
 <p-messages></p-messages>
 
 <p-panel header="Configuration Parameter Category" styleClass="p-mb-2">
-    <app-report-panel></app-report-panel>
+    <app-report-panel (typeReportChange)="onChangedTypeReport($event)" (forceDownloadChange)="onChangedForceDownload($event)"></app-report-panel>
 </p-panel>
 
 <p-toolbar styleClass="p-mb-2">
     <ng-template pTemplate="left">
-        <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+        <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="onExport()"></button>
     </ng-template>
 
     <ng-template pTemplate="right">
