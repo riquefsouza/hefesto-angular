@@ -17,8 +17,8 @@
         <ng-template pTemplate="end">
 
             <div *ngIf="(user$ | async) as user; else login">
-                <i class="fa fa-user-circle mr-1"></i>
-                <a class="mr-1">{{user.name}}</a>
+                <i class="pi pi-user p-mr-1"></i>
+                <a class="p-mr-5">{{user.name}}</a>
                 <button pButton label="Logout" icon="pi pi-power-off" (click)="logout()"></button>    
             </div>
         </ng-template>

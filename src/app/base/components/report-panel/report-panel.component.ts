@@ -26,7 +26,7 @@ export class ReportPanelComponent implements OnInit {
   constructor(private reportService: ReportService) {
     this.typeReport = this.reportService.getTypeReport();
     this.selectedTypeReport = PDFReport;
-    this.selectedForceDownload = false;
+    this.selectedForceDownload = true;
   }
 
   ngOnInit(): void {
