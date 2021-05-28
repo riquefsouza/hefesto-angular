@@ -3,8 +3,8 @@ import { TokenService } from '../services/token.service';
 import { BehaviorSubject } from 'rxjs';
 import { User } from './user';
 import jtw_decode from 'jwt-decode';
-import { MenuItem } from 'primeng/api';
 import { StorageService } from '../services/StorageService';
+import { MenuItemDTO } from '../models/MenuItemDTO';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -60,11 +60,11 @@ export class UserService {
         return this.idProfiles;
     }
 
-    getMenuItems(): MenuItem[] {
-        return this.storageService.getPersistedObj('menuItem') as MenuItem[];
+    getMenuItems(): MenuItemDTO[] {
+        return this.storageService.getPersistedObj('menuItem') as MenuItemDTO[];
     }
 
-    setMenuItems(menuItems: MenuItem[]) {
+    setMenuItems(menuItems: MenuItemDTO[]) {
         this.storageService.persistObj('menuItem', menuItems);
     }
 

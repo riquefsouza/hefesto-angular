@@ -33,13 +33,13 @@ export class BarraMenuComponent implements OnInit {
       {
         label: 'Settings',
         items: [
-          { label: 'Parameter Category', routerLink: '/admParameterCategory' },
-          { label: 'Parameter', routerLink: '/admParameter' },
-          { label: 'Profile', routerLink: '/admProfile' },
-          { label: 'Page', routerLink: '/admPage' },
-          { label: 'Menu', routerLink: '/admMenu' },
-          { label: 'User', routerLink: '/admUser' },
-          { label: 'Change Password', routerLink: '/changePasswordEdit' },
+          { label: 'Parameter Category', routerLink: '/admin/admParameterCategory' },
+          { label: 'Parameter', routerLink: '/admin/admParameter' },
+          { label: 'Profile', routerLink: '/admin/admProfile' },
+          { label: 'Page', routerLink: '/admin/admPage' },
+          { label: 'Menu', routerLink: '/admin/admMenu' },
+          { label: 'User', routerLink: '/admin/admUser' },
+          { label: 'Change Password', routerLink: '/admin/changePasswordEdit' },
           { label: 'Sair', command: () => { this.logout(); } }
         ]
       }
