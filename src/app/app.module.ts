@@ -45,6 +45,7 @@ import { AdmUserComponent } from './admin/components/adm-user/adm-user.component
 import { AdmUserEditComponent } from './admin/components/adm-user-edit/adm-user-edit.component';
 import { AdmProfileService } from './admin/services/AdmProfileService';
 import { AdmPageService } from './admin/services/AdmPageService';
+import { AdmUserService } from './admin/services/AdmUserService';
 import { ChangePasswordEditComponent } from './admin/components/change-password-edit/change-password-edit.component';
 import { LoginComponent } from './admin/components/login/login.component';
 import { ExportService } from './base/services/export.service';
@@ -101,7 +102,7 @@ import { httpInterceptorProviders } from './base/interceptors';
     providers: [httpInterceptorProviders,
         ConfirmationService, MessageService,
         StorageService, ExportService, ErrorService,
-        AdmProfileService, AdmPageService],
+        AdmProfileService, AdmPageService, AdmUserService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

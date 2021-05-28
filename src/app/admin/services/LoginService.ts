@@ -7,7 +7,8 @@ import { ErrorService } from 'src/app/base/services/error.service';
 import { environment } from 'src/environments/environment';
 import { AdmUser } from '../models/AdmUser';
 import { UserService } from 'src/app/base/user/user.service';
-import { Router } from '@angular/router';
+import { AdmProfileService } from './AdmProfileService';
+import { MenuItemDTO } from 'src/app/base/models/MenuItemDTO';
 
 @Injectable()
 export class LoginService {
@@ -17,7 +18,7 @@ export class LoginService {
     constructor(private http: HttpClient,
         private errorService: ErrorService,
         private userService: UserService,
-        private router: Router) {
+        private admProfileService: AdmProfileService) {
         this.PATH = environment.url;
     }
 
@@ -32,9 +33,18 @@ export class LoginService {
                 this.auth(loginForm).then((obj: TokenDTO) => {
                     this.userService.setToken(obj.token);
                     console.log(`User ${admUser.login} authenticated with token ${obj.token}`);
-                    resolve(true);
+
+                    if (this.userService.getIdProfiles().length > 0) {
+                      this.admProfileService.mountMenu(this.userService.getIdProfiles())
+                      .then((menus: MenuItemDTO[]) => {
+                        this.userService.setMenuItems(menus);
+                        resolve(true);
+                      });
+                    }
+
+                    // resolve(true);
                 })
-                .catch(erro => {
+                .catch(() => {
                     reject(false);
                 });
             } else {

@@ -79,7 +79,7 @@ export class AdmUserComponent implements OnInit {
 
     // this.storageService.setStorage(this.admUser);
     this.storageService.persistObj('admUser', this.admUser);
-    this.router.navigate(['/admUserEdit']);
+    this.router.navigate(['/admin/admUserEdit']);
   }
 
   onEdit(admUser: AdmUser) {
@@ -87,7 +87,7 @@ export class AdmUserComponent implements OnInit {
 
     // this.storageService.setStorage(this.admUser);
     this.storageService.persistObj('admUser', this.admUser);
-    this.router.navigate(['/admUserEdit']);
+    this.router.navigate(['/admin/admUserEdit']);
   }
 
   onDelete(admUser: AdmUser) {

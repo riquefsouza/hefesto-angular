@@ -88,7 +88,7 @@ export class AdmParameterComponent implements OnInit {
 
     // this.storageService.setStorage(this.admParameter);
     this.storageService.persistObj('admParameter', this.admParameter);
-    this.router.navigate(['/admParameterEdit']);
+    this.router.navigate(['/admin/admParameterEdit']);
   }
 
   onEdit(admParameter: AdmParameter) {
@@ -96,7 +96,7 @@ export class AdmParameterComponent implements OnInit {
 
     // this.storageService.setStorage(this.admParameter);
     this.storageService.persistObj('admParameter', this.admParameter);
-    this.router.navigate(['/admParameterEdit']);
+    this.router.navigate(['/admin/admParameterEdit']);
   }
 
   onDelete(admParameter: AdmParameter) {

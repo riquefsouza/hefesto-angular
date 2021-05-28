@@ -83,7 +83,7 @@ export class AdmPageEditComponent implements OnInit {
 
         this.listaAdmPage = [...this.listaAdmPage];
         this.admPage = {};
-        this.router.navigate(['/admPage']);
+        this.router.navigate(['/admin/admPage']);
     }
   }
 

@@ -4,12 +4,13 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AdmUser } from '../../models/AdmUser';
 import { LoginService } from '../../services/LoginService';
+import { UserService } from 'src/app/base/user/user.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [LoginService, MessageService]
+  providers: [LoginService, MessageService, UserService]
 })
 export class LoginComponent implements OnInit {
 
@@ -19,10 +20,12 @@ export class LoginComponent implements OnInit {
 
   constructor(private messageService: MessageService,
     private loginService: LoginService,
+    private userService: UserService,
     private router: Router) { }
 
   ngOnInit(): void {
     this.onClean();
+    this.userService.logout();
   }
 
   onClean() {

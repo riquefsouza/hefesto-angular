@@ -97,7 +97,7 @@ export class AdmProfileEditComponent implements OnInit {
 
         this.listaAdmProfile = [...this.listaAdmProfile];
         this.admProfile = {};
-        this.router.navigate(['/admProfile']);
+        this.router.navigate(['/admin/admProfile']);
     }
   }
 

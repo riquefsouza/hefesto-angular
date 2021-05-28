@@ -76,7 +76,7 @@ export class AdmProfileComponent implements OnInit {
 
     // this.storageService.setStorage(this.admProfile);
     this.storageService.persistObj('admProfile', this.admProfile);
-    this.router.navigate(['/admProfileEdit']);
+    this.router.navigate(['/admin/admProfileEdit']);
   }
 
   onEdit(admProfile: AdmProfile) {
@@ -84,7 +84,7 @@ export class AdmProfileComponent implements OnInit {
 
     // this.storageService.setStorage(this.admProfile);
     this.storageService.persistObj('admProfile', this.admProfile);
-    this.router.navigate(['/admProfileEdit']);
+    this.router.navigate(['/admin/admProfileEdit']);
   }
 
   onDelete(admProfile: AdmProfile) {

@@ -25,7 +25,7 @@ export class ChangePasswordEditComponent implements OnInit {
   }
 
   onClean() {
-    this.admUser = cleanAdmUser
+    this.admUser = cleanAdmUser;
   }
 
   onSave() {

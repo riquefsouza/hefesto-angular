@@ -83,7 +83,7 @@ export class AdmUserEditComponent implements OnInit {
 
         this.listaAdmUser = [...this.listaAdmUser];
         this.admUser = {};
-        this.router.navigate(['/admUser']);
+        this.router.navigate(['/admin/admUser']);
     }
   }
 

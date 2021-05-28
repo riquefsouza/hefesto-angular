@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as FileSaver from 'file-saver';
 import { tap, catchError } from 'rxjs/operators';
+import { LoginForm } from 'src/app/base/models/LoginForm';
 import { ReportParamForm } from 'src/app/base/models/ReportParamsForm';
 import { ErrorService } from 'src/app/base/services/error.service';
 import { environment } from 'src/environments/environment';
@@ -162,5 +163,17 @@ export class AdmUserService {
 
         return res;
     }
+
+    public async findByLogin(obj: LoginForm): Promise<AdmUser> {
+        const url = `${this.PATH}/findByLogin/${obj.login}`;
+        const res = await this.http.get<AdmUser>(url, this.errorService.httpOptions)
+            .pipe(
+                tap(_ => this.errorService.log(`findByLogin user=${obj.login}`)),
+                catchError(this.errorService.handleError<AdmUser>('findByLogin'))
+            )
+            .toPromise();
+        return res;
+    }
+
 
 }

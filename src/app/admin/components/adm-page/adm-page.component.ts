@@ -77,7 +77,7 @@ export class AdmPageComponent implements OnInit {
 
     // this.storageService.setStorage(this.admPage);
     this.storageService.persistObj('admPage', this.admPage);
-    this.router.navigate(['/admPageEdit']);
+    this.router.navigate(['/admin/admPageEdit']);
   }
 
   onEdit(admPage: AdmPage) {
@@ -85,7 +85,7 @@ export class AdmPageComponent implements OnInit {
 
     // this.storageService.setStorage(this.admPage);
     this.storageService.persistObj('admPage', this.admPage);
-    this.router.navigate(['/admPageEdit']);
+    this.router.navigate(['/admin/admPageEdit']);
   }
 
   onDelete(admPage: AdmPage) {

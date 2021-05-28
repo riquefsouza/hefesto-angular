@@ -70,7 +70,7 @@ export class AdmParameterEditComponent implements OnInit {
 
         this.listaAdmParameter = [...this.listaAdmParameter];
         this.admParameter = {};
-        this.router.navigate(['/admParameter']);
+        this.router.navigate(['/admin/admParameter']);
     }
   }
 

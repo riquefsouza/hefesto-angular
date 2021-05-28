@@ -1,3 +1,4 @@
+import { MenuItemDTO } from './../../models/MenuItemDTO';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
@@ -21,10 +22,13 @@ export class BarraMenuComponent implements OnInit {
     private router: Router) {
 
     this.user$ = userService.getUser();
+
   }
 
   ngOnInit(): void {
+    this.menuItems = this.userService.getMenuItems();
 
+/*
     this.menuItems = [
       {
         label: 'Settings',
@@ -40,6 +44,7 @@ export class BarraMenuComponent implements OnInit {
         ]
       }
     ];
+*/
   }
 
   logout() {
