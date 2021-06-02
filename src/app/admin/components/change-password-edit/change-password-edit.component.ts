@@ -54,7 +54,7 @@ export class ChangePasswordEditComponent implements OnInit {
         return;
       }
 
-      if (this.changePasswordService.updatePassword(this.admUser.newPassword)) {
+      if (this.changePasswordService.updatePassword(this.admUser)) {
         this.messageService.add({
           severity: 'success', summary: 'Successful',
           detail: 'Password changed successfully!', life: 3000

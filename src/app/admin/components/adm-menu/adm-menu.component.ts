@@ -45,17 +45,17 @@ export class AdmMenuComponent implements OnInit {
   constructor(private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private admMenuService: AdmMenuService,
-    private admPageService: AdmPageService) { 
-      this.reportParamForm = {
-        reportType: 'PDF',
-        forceDownload: true
-      };
-    }
+    private admPageService: AdmPageService) {
+    this.reportParamForm = {
+      reportType: 'PDF',
+      forceDownload: true
+    };
+  }
 
   ngOnInit(): void {
     this.admPageService
-    .findAll()
-    .then(data => this.listaAdmPage = data);
+      .findAll()
+      .then(data => this.listaAdmPage = data);
 
     this.admMenuService
       .findAll()
@@ -72,16 +72,16 @@ export class AdmMenuComponent implements OnInit {
       { field: 'description', header: 'Description' }
     ];
 
-    this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
+    this.exportColumns = this.cols.map(col => ({ title: col.header, dataKey: col.field }));
   }
 
   updateMenusTree(): void {
     this.listaNodeMenu = [];
     this.menuRoot = {
-        'label': 'System Menu',
-        'data': '0',
-        'children': []
-      };
+      'label': 'System Menu',
+      'data': '0',
+      'children': []
+    };
 
     this.listaAdmMenu.forEach((itemMenu: AdmMenu) => {
       const m: TreeNode = {};
@@ -128,9 +128,6 @@ export class AdmMenuComponent implements OnInit {
 
   nodeSelect(event) {
     this.selectedAdmMenu = event.node.data;
-
-    // this.messageService.add({severity: 'info', summary: 'Node Selected',
-      // detail: this.selectedAdmMenu.description});
   }
 
   onChangedTypeReport(typeReport: ItypeReport) {
@@ -143,7 +140,7 @@ export class AdmMenuComponent implements OnInit {
 
   onExport() {
     this.admMenuService.report(this.reportParamForm).then(() => {
-      this.messageService.add({severity: 'info', summary: 'Menu Exported', detail: 'Menu Exported', life: 1000});
+      this.messageService.add({ severity: 'info', summary: 'Menu Exported', detail: 'Menu Exported', life: 1000 });
     });
   }
 
@@ -160,16 +157,17 @@ export class AdmMenuComponent implements OnInit {
 
   onDelete(admMenu: AdmMenu) {
     this.confirmationService.confirm({
-        message: 'Are you sure you want to delete ' + admMenu.description + '?',
-        header: 'Confirm',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-          this.admMenuService.delete(admMenu.id).then(obj => {
-            this.listaAdmMenu = this.listaAdmMenu.filter(val => val.id !== admMenu.id);
-            this.admMenu = {};
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Menu Deleted', life: 3000 });
-          });
-        }
+      message: 'Are you sure you want to delete ' + admMenu.description + '?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.admMenuService.delete(admMenu.id).then(obj => {
+          this.listaAdmMenu = this.listaAdmMenu.filter(val => val.id !== admMenu.id);
+          this.admMenu = {};
+          this.updateMenusTree();
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Menu Deleted', life: 3000 });
+        });
+      }
     });
   }
 
@@ -180,5 +178,29 @@ export class AdmMenuComponent implements OnInit {
 
   onSave() {
     this.submitted = true;
+
+    if (this.admMenu.description.trim()) {
+      if (this.admMenu.id) {
+        this.admMenuService.update(this.admMenu).then((obj: AdmMenu) => {
+          this.admMenu = obj;
+          this.listaAdmMenu[this.admMenuService
+            .findIndexById(this.listaAdmMenu, this.admMenu.id)] = this.admMenu;
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Menu Updated', life: 3000 });
+        });
+      } else {
+        this.admMenuService.insert(this.admMenu).then((obj: AdmMenu) => {
+          this.admMenu = obj;
+          this.listaAdmMenu.push(this.admMenu);
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Menu Created', life: 3000 });
+        });
+      }
+
+      this.listaAdmMenu = [...this.listaAdmMenu];
+      this.admMenuDialog = false;
+      this.admMenu = {};
+      this.updateMenusTree();
+    }
+
   }
+
 }

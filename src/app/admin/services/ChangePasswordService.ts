@@ -1,10 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AdmUserService } from './AdmUserService';
+import * as bcryptjs from 'bcryptjs';
+import { AdmUser } from '../models/AdmUser';
 
 @Injectable()
 export class ChangePasswordService {
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient,
+        private admUserService: AdmUserService) { }
 
     private distinct = (arrArg: string[]) => {
         return arrArg.filter((elem: string, pos: number, arr: string[]) => {
@@ -75,8 +79,18 @@ export class ChangePasswordService {
         }
     }
 
-    public updatePassword(newPassword: string): boolean {
-        throw new Error('Method not implemented.');
+    public updatePassword(admUser: AdmUser): boolean {
+
+        const salt = bcryptjs.genSaltSync(10);
+        admUser.password = bcryptjs.hashSync(admUser.confirmNewPassword, salt);
+
+        this.admUserService.update(admUser).then((obj: AdmUser) => {
+            return true;
+        })
+        .catch(() => {
+            return false;
+        });
+        return false;
     }
 
 }

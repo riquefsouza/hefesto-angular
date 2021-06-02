@@ -35,7 +35,8 @@
                 "file-saver",
                 "xlsx",
                 "@babel/runtime-corejs3",
-                "raf"
+                "raf",
+                "bcryptjs"
               ]
             },
             "configurations": {
