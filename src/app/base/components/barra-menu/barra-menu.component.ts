@@ -28,6 +28,10 @@ export class BarraMenuComponent implements OnInit {
   ngOnInit(): void {
     this.menuItems = this.userService.getMenuItems();
 
+    if (this.menuItems) {
+      this.menuItems.push({ label: 'Sair', icon: 'pi pi-fw pi-power-off', command: () => { this.logout(); } });
+    }
+
 /*
     this.menuItems = [
       {

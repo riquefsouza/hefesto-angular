@@ -84,7 +84,7 @@ export class ChangePasswordService {
         const salt = bcryptjs.genSaltSync(10);
         admUser.password = bcryptjs.hashSync(admUser.confirmNewPassword, salt);
 
-        this.admUserService.update(admUser).then((obj: AdmUser) => {
+        this.admUserService.update(admUser).then(() => {
             return true;
         })
         .catch(() => {

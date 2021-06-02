@@ -15,11 +15,9 @@
             </a>
         </ng-template>
         <ng-template pTemplate="end">
-
             <div *ngIf="(user$ | async) as user">
                 <i class="pi pi-user p-mr-1"></i>
-                <a class="p-mr-5">{{user.name}}</a>
-                <button pButton label="Logout" icon="pi pi-power-off" (click)="logout()"></button>    
+                <span class="p-mr-5">{{user.name}}</span>                
             </div>
         </ng-template>        
     </p-menubar>
